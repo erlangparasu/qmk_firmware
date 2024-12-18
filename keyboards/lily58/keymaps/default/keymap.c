@@ -23,7 +23,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   if (!is_keyboard_master())
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+    return OLED_ROTATION_0;  // flips the display 180 degrees if offhand
   return rotation;
 }
 
@@ -50,11 +50,13 @@ bool oled_task_user(void) {
     oled_write(get_u8_str(get_current_wpm(), ' '), false);
     oled_write_ln_P(PSTR(" WPM"), false);
 #endif
-    oled_write_ln(read_host_led_state(), false);
     oled_write_ln(read_keylog(), false);
+    oled_write_ln(read_timelog(), false);
     oled_write_ln(read_layer_state(), false);
   } else {
-    oled_write(read_logo(), false);
+    // oled_write(read_logo(), false);
+    oled_write_ln_P(PSTR(" "), false);
+    oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
     // oled_write_ln_P(PSTR(" "), false);
     // oled_write_ln_P(PSTR("ERLANG PARASU"), false);
   }
@@ -67,7 +69,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef OLED_ENABLE
     set_keylog(keycode, record);
 #endif
-    // set_timelog();
+    set_timelog();
   }
   return true;
 }
