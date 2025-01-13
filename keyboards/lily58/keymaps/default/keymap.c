@@ -46,16 +46,14 @@ bool oled_task_user(void) {
     // oled_write_ln(read_host_led_state(), false);
     // oled_write_ln_P(PSTR(" "), false);
     // oled_write_ln_P(PSTR("ERLANG PARASU"), false);
+    oled_write_ln(read_layer_state(), false);
+    oled_write_ln(read_keylog(), false);
 #ifdef WPM_ENABLE
     oled_write(get_u8_str(get_current_wpm(), ' '), false);
     oled_write_ln_P(PSTR(" WPM"), false);
 #endif
-    oled_write_ln(read_keylog(), false);
     oled_write_ln(read_timelog(), false);
-    oled_write_ln(read_layer_state(), false);
-    // oled_write_ln_P(PSTR("Ready"), false);
     // oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
-    // oled_write_ln_P(PSTR(" "), false);
     // oled_write_ln_P(PSTR("ERLANG PARASU"), false);
   } else {
     oled_write(read_logo(), false);
